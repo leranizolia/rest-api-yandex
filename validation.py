@@ -55,7 +55,7 @@ def validate_order(data):
                 or type(order['order_id']) != 'int':
             wrong_orders_ind.append(ind)
             validation = False
-        if order.get('weight', 'missed weight') == 'missed weight' or order['weight'] <= 0:
+        if order.get('weight', 'missed weight') == 'missed weight' or not (0.01 <= order['weight'] <= 50):
             wrong_orders_ind.append(ind)
             validation = False
             if ind not in wrong_orders_ind:

@@ -1,5 +1,5 @@
 from app import app, db, ma
-from models import Courier, courier_schema, couriers_schema
+from models import Courier, Order, courier_schema, couriers_schema, orders_schema
 from flask import request, jsonify
 from validation import validate_courier, validate_order
 from flask_restful import abort
@@ -41,9 +41,9 @@ def add_couriers():
     db.session.commit()
 
     if validate_courier(data)[1]:
-        return "HTTP 201 Created\n", {"couriers": couriers_schema.jsonify(new_couriers)}, 201
+        return "HTTP 201 Created\n", jsonify({"couriers": couriers_schema.jsonify(new_couriers)}), 201
     else:
-        return "HTTP 400 Bad Request\n", {"validation_error": jsonify(validate_courier(data)[2])}, 400
+        return "HTTP 400 Bad Request\n", jsonify({"validation_error": validate_courier(data)[2]}), 400
 
 # Update info about courier
 
@@ -97,9 +97,74 @@ def add_orders():
     db.session.commit()
 
     if validate_order(data)[1]:
-        return "HTTP 201 Created\n", {"orders": couriers_schema.jsonify(new_orders)}, 201
+        return "HTTP 201 Created\n", jsonify({"orders": orders_schema.jsonify(new_orders)}), 201
     else:
-        return "HTTP 400 Bad Request\n", {"validation_error": jsonify(validate_order(data)[2])}, 400
+        return "HTTP 400 Bad Request\n", jsonify({"validation_error": validate_order(data)[2]}), 400
+
+
+# функция для получения всех заказов из системы
+def get_orders():
+    all_orders = Order.query.all
+    return all_orders
+
+# для пересечения времени
+def has_overlap(c_start, c_end, o_start, o_end):
+    latest_start = max(c_start, o_start)
+    earliest_end = min(c_end, o_end)
+    return latest_start <= earliest_end
+
+
+@app.route('orders/assign')
+def assign():
+    courier_id = request.json['courier_id']
+    courier = Courier.query.get(courier_id)
+    if not courier:
+        return "HTTP 400 Bad Request\n", 400
+    courier_type = courier.courier_type
+    # вот здесь не очень понятно, как ставить границы: 0-16, или 10, 16?
+    # скорее всего, 1 варик, т. к. так можно больше заказов реализовать
+    weight_possible=[]
+    if courier_type == 'foot':
+        weight_possible = range(0, 11)
+    elif courier_type == 'bike':
+        weight_possible = range(0, 16)
+    elif courier_type == 'bike':
+        weight_possible = range(0, 51)
+    regions = courier.regions
+    working_hours = courier.working_hours
+    start_hours_c=[]
+    end_hours_c=[]
+    courier_hours=[]
+    for period in working_hours:
+        start_hours_c.append(period.split('-')[0])
+        end_hours_c.append(period.split('-')[1])
+        # проверить правильно ли tuple передала
+        courier_hours.append((period.split('-')[0], period.split('-')[1]))
+
+    all_orders = get_orders()
+    for order in all_orders:
+        order_id = order.order_id
+        weight = order.weight
+        region = order.region
+        delivery_hours = order.delivery_hours
+        start_hours_o = []
+        end_hours_o = []
+        order_hours=[]
+        for period in working_hours:
+            start_hours_o.append(period.split('-')[0])
+            end_hours_o.append(period.split('-')[1])
+            order_hours.append((period.split('-')[0], period.split('-')[1]))
+        courier_id = order.courier_id
+        # если у заказа нет курьера
+        if courier_id is None:
+            if (weight in weight_possible) and (region in regions) and
+            # проверяем на соответствие параметрам курьера
+
+
+
+
+
+
 
 
 

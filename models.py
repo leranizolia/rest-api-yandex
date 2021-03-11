@@ -14,10 +14,11 @@ class Courier(db.Model):
     courier_type = db.Column(db.String(10), nullable=False)
     regions = db.Column(db.PickleType, nullable=False)
     working_hours = db.Column(db.PickleType, nullable=False)
-    orders = db.relationship('Order', backref='courier', lazy=True)
 
     def __init__(self, *args, **kwargs):
         super(Courier, self).__init__(*args, **kwargs)
+
+    orders = db.relationship('Order', backref='courier', lazy=True)
 
     def __repr__(self):
         courier = dict()
@@ -33,10 +34,11 @@ class Order(db.Model):
     weight = db.Column(db.Float, nullable=False)
     region = db.Column(db.Integer, nullable=False)
     delivery_hours = db.Column(db.PickleType, nullable=False)
-    courier_id = db.Column(db.Integer, db.ForeignKey('courier.courier_id'), nullable=False)
 
     def __init__(self, *args, **kwargs):
         super(Order, self).__init__(*args, **kwargs)
+
+    courier_id = db.Column(db.Integer, db.ForeignKey('courier.courier_id'))
 
     def __repr__(self):
         order = dict()
@@ -67,7 +69,8 @@ class CourierSchema(ma.Schema):
 
 class OrderSchema(ma.Schema):
     class Meta:
-        fields = {'order_id', 'weight', 'region', 'delivery_hours'}
+        # fields = {'order_id', 'weight', 'region', 'delivery_hours'}
+        fields = {'order_id'}
 
 
 courier_schema = CourierSchema(strict=True)
