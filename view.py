@@ -4,6 +4,29 @@ from flask import request, jsonify
 from validation import validate_courier, validate_order
 from flask_restful import abort
 import re
+from datetime import datetime
+
+
+def transform_into_dict(ids):
+    list_of_dicts_with_id = []
+    for i in ids:
+        list_of_dicts_with_id.append({"id": i})
+
+
+def has_overlap(c, o):
+    for one_time_c in c:
+        c_start = one_time_c[0]
+        c_end = one_time_c[1]
+        courier_matching_time = one_time_c
+        for one_time_o in o:
+            o_start = one_time_o[0]
+            o_end = one_time_o[1]
+            order_matching_time = one_time_o
+            latest_start = max(c_start, o_start)
+            earliest_end = min(c_end, o_end)
+            match = latest_start <= earliest_end
+            if match:
+                return match
 
 
 @app.route('/courier', methods=['POST'])
@@ -26,7 +49,10 @@ def add_courier():
 @app.route('/couriers', methods=['POST'])
 def add_couriers():
     data = request.json['data']
-    new_couriers = []
+    # если вход неправильно формата
+    if not data:
+        return "HTTP 400 Bad Request\n", 400
+    new_couriers_id = []
     for courier in validate_courier(data)[0]:
         courier_id = courier['courier_id']
         courier_type = courier['courier_type']
@@ -36,12 +62,12 @@ def add_couriers():
         new_courier = Courier(courier_id, courier_type, regions, working_hours)
         db.session.add(new_courier)
 
-        new_couriers.append(new_courier)
-    # можно ли коммит вот здесь делать?
+        new_couriers_id.append(new_courier.courier_id)
+
     db.session.commit()
 
     if validate_courier(data)[1]:
-        return "HTTP 201 Created\n", jsonify({"couriers": couriers_schema.jsonify(new_couriers)}), 201
+        return "HTTP 201 Created\n", jsonify({"couriers": transform_into_dict(new_couriers_id)}), 201
     else:
         return "HTTP 400 Bad Request\n", jsonify({"validation_error": validate_courier(data)[2]}), 400
 
@@ -56,8 +82,7 @@ def update_courier(courier_id):
     courier = Courier.query.get(courier_id)
     # надо ли это тоже делать?
     if not courier:
-        abort(404, messsage="Courier isn't registered in the system, cannot update")
-
+        return "HTTP 400 Bad Request\n",  400
     if request.json['courier_type']:
         if request.json['courier_type'] not in ['foot', 'bike', 'car']:
             return "HTTP 400 Bad Request\n", 400
@@ -72,7 +97,41 @@ def update_courier(courier_id):
         if re.match(pattern, courier['working_hours']) is None:
             return "HTTP 400 Bad Request\n", 400
         else:
-            courier.courier_type = request.json['working_hours']
+            courier.working_hours = request.json['working_hours']
+
+    weight_possible = 0
+    if courier.courier_type == 'foot':
+        weight_possible = 10
+    elif courier.courier_type == 'bike':
+        weight_possible = 15
+    elif courier.courier_type == 'car':
+        weight_possible = 50
+
+    working_hours = courier.working_hours
+    start_hours_c = []
+    end_hours_c = []
+    courier_hours = []
+    for period in working_hours:
+        start_hours_c.append(period.split('-')[0])
+        end_hours_c.append(period.split('-')[1])
+        # проверить правильно ли tuple передала
+        courier_hours.append((period.split('-')[0], period.split('-')[1]))
+
+    # проверка на соответсвие заказов курьера его новым параметрам
+    orders_has = Order.query.filter(Order.courier_id == courier_id)
+    for order in orders_has:
+        delivery_hours = order.delivery_hours
+        start_hours_o = []
+        end_hours_o = []
+        order_hours = []
+        for period in delivery_hours:
+            start_hours_o.append(period.split('-')[0])
+            end_hours_o.append(period.split('-')[1])
+            order_hours.append((period.split('-')[0], period.split('-')[1]))
+        if not ((float("{0:.2f}".format(order.weight)) <= weight_possible) and (order.region in courier.regions)
+                and has_overlap(courier_hours, order_hours)):
+            order.courier_id = None
+            order.assign_time = None
 
     db.session.commit()
 
@@ -108,57 +167,110 @@ def get_orders():
     return all_orders
 
 # для пересечения времени
-def has_overlap(c_start, c_end, o_start, o_end):
-    latest_start = max(c_start, o_start)
-    earliest_end = min(c_end, o_end)
-    return latest_start <= earliest_end
+#def has_overlap(c_start, c_end, o_start, o_end):
+#    latest_start = max(c_start, o_start)
+#   earliest_end = min(c_end, o_end)
+#   return latest_start <= earliest_end
 
 
-@app.route('orders/assign')
+@app.route('orders/assign', methods=['ASSIGN'])
 def assign():
     courier_id = request.json['courier_id']
     courier = Courier.query.get(courier_id)
+    courier_id_pk = courier_id
     if not courier:
         return "HTTP 400 Bad Request\n", 400
     courier_type = courier.courier_type
     # вот здесь не очень понятно, как ставить границы: 0-16, или 10, 16?
     # скорее всего, 1 варик, т. к. так можно больше заказов реализовать
-    weight_possible=[]
+    weight_possible = 0
     if courier_type == 'foot':
-        weight_possible = range(0, 11)
+        weight_possible = 10
     elif courier_type == 'bike':
-        weight_possible = range(0, 16)
-    elif courier_type == 'bike':
-        weight_possible = range(0, 51)
+        weight_possible = 15
+    elif courier_type == 'car':
+        weight_possible = 50
     regions = courier.regions
     working_hours = courier.working_hours
-    start_hours_c=[]
-    end_hours_c=[]
-    courier_hours=[]
+    start_hours_c = []
+    end_hours_c = []
+    courier_hours = []
     for period in working_hours:
         start_hours_c.append(period.split('-')[0])
         end_hours_c.append(period.split('-')[1])
         # проверить правильно ли tuple передала
         courier_hours.append((period.split('-')[0], period.split('-')[1]))
+    orders_id_assign = []
 
     all_orders = get_orders()
     for order in all_orders:
         order_id = order.order_id
         weight = order.weight
         region = order.region
+        complete_time = order.complete_time
+        assign_time = order.assign_time
         delivery_hours = order.delivery_hours
         start_hours_o = []
         end_hours_o = []
-        order_hours=[]
-        for period in working_hours:
+        order_hours = []
+        for period in delivery_hours:
             start_hours_o.append(period.split('-')[0])
             end_hours_o.append(period.split('-')[1])
             order_hours.append((period.split('-')[0], period.split('-')[1]))
-        courier_id = order.courier_id
+        courier_id_fk = order.courier_id
         # если у заказа нет курьера
-        if courier_id is None:
-            if (weight in weight_possible) and (region in regions) and
+        if courier_id_fk is None:
             # проверяем на соответствие параметрам курьера
+            if (float("{0:.2f}".format(weight)) <= weight_possible) and (region in regions) and has_overlap(courier_hours, order_hours):
+                # если курьер мэтчится с заказом, то надо 1) присвоить заказ, 2) assign time, 3) добавить в список заказов курьера
+                courier_id_fk = courier_id_pk
+                assign_time_new = datetime.now()
+                orders_id_assign.append(order_id)
+                # проверяем случай если курьер уже доставил ранее выданные заказы
+                for order_id in orders_id_assign:
+                    # проверить правильно ли использовать jsonify или здесь нужно dump
+                    if complete(jsonify({"courier_id": courier_id_fk, "order_id": order_id, "complete_time": complete_time}))[0] == "HTTP 400 Bad Request\n":
+                        orders_id_assign.remove(order_id)
+
+                # для оставшихся невыполненных заказов нужно поменять assign время
+                order.assign_time = assign_time_new
+
+                db.session.commit()
+
+                if not orders_id_assign:
+                    # вернуть пустой список - надо jsonify?
+                    return []
+                else:
+                    return "HTTP 200 OK\n", jsonify({"orders": transform_into_dict(orders_id_assign),
+                                                     "assign_time": assign_time}), 200
+
+
+@app.route('/orders/complete', methods=['COMPLETE'])
+# делаю дефолт для complete_time, чтобы в assign не вылезла ошибка при вызове complete
+def complete():
+    courier_id = request.json['courier_id']
+    order_id = request.json['order_id']
+    order = Order.query.get(order_id)
+    order_id = order.order_id
+    assign_time = order.assign_time
+    complete_time = request.json['complete_time']
+
+    db.session.commit()
+
+    if not order_id or courier_id != order.courier_id or not assign_time:
+        return "HTTP 400 Bad Request\n", 400
+    else:
+        order.complete_time = complete_time
+        return "HTTP 200 OK\n", jsonify({"id": order_id}), 200
+
+
+
+
+
+
+
+
+
 
 
 

@@ -11,7 +11,7 @@ from itertools import count
 
 class Courier(db.Model):
     courier_id = db.Column(db.Integer, primary_key=True, nullable=False)
-    courier_type = db.Column(db.String(10), nullable=False)
+    courier_type = db.Column(db.String(100), nullable=False)
     regions = db.Column(db.PickleType, nullable=False)
     working_hours = db.Column(db.PickleType, nullable=False)
 
@@ -38,7 +38,10 @@ class Order(db.Model):
     def __init__(self, *args, **kwargs):
         super(Order, self).__init__(*args, **kwargs)
 
-    courier_id = db.Column(db.Integer, db.ForeignKey('courier.courier_id'))
+    # дополнительные колонки, которые появляются от взаимодействия с курьером
+    courier_id = db.Column(db.Integer, db.ForeignKey('courier.courier_id'), nullable=True)
+    assign_time = db.Column(db.Datetime, nullable=True)
+    complete_time = db.Column(db.Datetime, nullable=True)
 
     def __repr__(self):
         order = dict()
