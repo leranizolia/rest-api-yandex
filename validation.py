@@ -3,7 +3,7 @@
 import re
 from view import transform_into_dict
 
-pattern = r"^([01]\d | 2[0-3])\:([0 - 5]\d) - ([01]\d | 2[0-3])\:([0 - 5]\d)$"
+pattern = r"^([01]\d|2[0-3])\:([0-5]\d)-([01]\d|2[0-3])\:([0-5]\d)$"
 
 # проверка полей курьера на соответствие требованиям
 
@@ -13,9 +13,10 @@ def validate_courier(data):
     wrong_couriers = []
     wrong_couriers_ind = []
     for ind, courier in enumerate(data):
+        #print(courier)
         if courier.get('courier_id', 'missed id') == 'missed id' or courier['courier_id'] == str(' ') \
                 or courier['courier_id'] <= 0\
-                or type(courier['courier_id']) != 'int':
+                or not isinstance(courier['courier_id'], int):
             wrong_couriers_ind.append(ind)
             validated = False
         if courier.get('courier_type', 'missed type') == 'missed type' or courier['courier_type'] not in ['foot', 'bike', 'car']:
@@ -25,7 +26,7 @@ def validate_courier(data):
             if ind not in wrong_couriers_ind:
                 wrong_couriers.append(courier['courier_id'])
         if courier.get('regions', 'missed regions') == 'missed regions' or not all(a > 0 for a in courier['regions']) \
-                or not all(type(a) == 'int' for a in courier['regions']):
+                or not all(isinstance(a, int) for a in courier['regions']):
             wrong_couriers_ind.append(ind)
             validated = False
             # если курьер не относится к категории, у которой проблема с id
@@ -33,7 +34,7 @@ def validate_courier(data):
                     or courier['courier_id'] <= 0 or type(courier['courier_id']) != 'int':
                 wrong_couriers.append(courier['courier_id'])
         if courier.get('working_hours', 'missed working hours') == 'missed working hours'\
-                or re.match(pattern, courier['working_hours']) is None:
+                or not all(re.match(pattern, a) is not None for a in courier['working_hours']) or courier['working_hours']==[]:
             wrong_couriers_ind.append(ind)
             validated = False
             # если курьер не относится к категории, у которой проблема с id
@@ -41,13 +42,16 @@ def validate_courier(data):
                     or courier['courier_id'] <= 0 or type(courier['courier_id']) != 'int':
                 wrong_couriers.append(courier['courier_id'])
 
-    wrong_couriers_ind = set(wrong_couriers_ind)
-    wrong_couriers = set(wrong_couriers)
+    wrong_couriers_ind = list(set(wrong_couriers_ind))
+    wrong_couriers = list(set(wrong_couriers))
+    #print(wrong_couriers_ind)
 
     if validated:
-        return data, validated
+        #print(courier)
+        return data, data
     else:
-        return [courier for courier in data if courier not in data[wrong_couriers_ind]], validated,\
+        #print(data)
+        return [courier for courier in data if courier not in [data[x] for x in wrong_couriers_ind]], validated,\
                transform_into_dict(wrong_couriers)
 
 

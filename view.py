@@ -1,16 +1,20 @@
 from app import app, db, ma
-from models import Courier, Order, courier_schema, couriers_schema, orders_schema
+from models import Courier, Order
 from flask import request, jsonify
-from validation import validate_courier, validate_order
-from flask_restful import abort
 import re
 from datetime import datetime
-
+from flask import Response
+import json
 
 def transform_into_dict(ids):
     list_of_dicts_with_id = []
     for i in ids:
         list_of_dicts_with_id.append({"id": i})
+
+    return list_of_dicts_with_id
+
+
+from validation import validate_courier, validate_order
 
 
 def has_overlap(c, o):
@@ -29,20 +33,6 @@ def has_overlap(c, o):
                 return match
 
 
-@app.route('/courier', methods=['POST'])
-def add_courier():
-    courier_id = request.json['courier_id']
-    courier_type = request.json['courier_type']
-    regions = request.json['regions']
-    working_hours = request.json['working_hours']
-
-    new_courier = Courier(courier_id, courier_type, regions, working_hours)
-
-    db.session.add(new_courier)
-    db.session.commit()
-
-    return courier_schema.jsonify(new_courier)
-
 # Upload couriers in the system
 
 
@@ -53,23 +43,27 @@ def add_couriers():
     if not data:
         return "HTTP 400 Bad Request\n", 400
     new_couriers_id = []
-    for courier in validate_courier(data)[0]:
+    data = validate_courier(data)
+    for courier in data[0]:
         courier_id = courier['courier_id']
         courier_type = courier['courier_type']
         regions = courier['regions']
         working_hours = courier['working_hours']
 
-        new_courier = Courier(courier_id, courier_type, regions, working_hours)
+        new_courier = Courier(courier_id=courier_id, courier_type=courier_type, regions=regions, working_hours=working_hours)
         db.session.add(new_courier)
 
         new_couriers_id.append(new_courier.courier_id)
 
     db.session.commit()
 
-    if validate_courier(data)[1]:
+    if data[1]:
         return "HTTP 201 Created\n", jsonify({"couriers": transform_into_dict(new_couriers_id)}), 201
     else:
-        return "HTTP 400 Bad Request\n", jsonify({"validation_error": validate_courier(data)[2]}), 400
+        response = Response(response=jsonify({"validation_error": data[2]}),
+                           status=400,
+                           headers="HTTP 400 Bad Request\n")
+        return response
 
 # Update info about courier
 
@@ -89,7 +83,7 @@ def update_courier(courier_id):
         else:
             courier.courier_type = request.json['courier_type']
     if request.json['regions']:
-        if not all(a > 0 for a in request.json['regions']):
+        if not all(a > 0 for a in request.json['regions']) or not all(type(a) == 'int' for a in courier['regions']):
             return "HTTP 400 Bad Request\n", 400
         else:
             courier.regions = request.json['regions']
@@ -135,28 +129,31 @@ def update_courier(courier_id):
 
     db.session.commit()
 
-    return "HTTP 200 OK\n", courier_schema.jsonify(courier), 200
+    return "HTTP 200 OK\n", jsonify({"courier_id": courier.courier_id, "courier_type": courier.courier_type,
+                                     "regions": courier.regions, "working_hours": courier.working_hours}), 200
 
 
 @app.route('/orders', methods=['POST'])
 def add_orders():
     data = request.json['data']
-    new_orders = []
+    if not data:
+        return "HTTP 400 Bad Request\n", 400
+    new_orders_id = []
     for order in validate_order(data)[0]:
         order_id = order['order_id']
         weight = order['weight']
         region = order['region']
         delivery_hours = order['delivery_hours']
 
-        new_order = Courier(order_id, weight, region, delivery_hours)
+        new_order = Order(order_id, weight, region, delivery_hours)
         db.session.add(new_order)
 
-        new_orders.append(new_order)
-    # можно ли коммит вот здесь делать?
+        new_orders_id.append(new_order.order_id)
+
     db.session.commit()
 
     if validate_order(data)[1]:
-        return "HTTP 201 Created\n", jsonify({"orders": orders_schema.jsonify(new_orders)}), 201
+        return "HTTP 201 Created\n", jsonify({"orders": transform_into_dict(new_orders_id)}), 201
     else:
         return "HTTP 400 Bad Request\n", jsonify({"validation_error": validate_order(data)[2]}), 400
 
@@ -173,7 +170,7 @@ def get_orders():
 #   return latest_start <= earliest_end
 
 
-@app.route('orders/assign', methods=['ASSIGN'])
+@app.route('/orders/assign', methods=['ASSIGN'])
 def assign():
     courier_id = request.json['courier_id']
     courier = Courier.query.get(courier_id)
@@ -200,6 +197,7 @@ def assign():
         end_hours_c.append(period.split('-')[1])
         # проверить правильно ли tuple передала
         courier_hours.append((period.split('-')[0], period.split('-')[1]))
+
     orders_id_assign = []
 
     all_orders = get_orders()

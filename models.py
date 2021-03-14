@@ -40,8 +40,8 @@ class Order(db.Model):
 
     # дополнительные колонки, которые появляются от взаимодействия с курьером
     courier_id = db.Column(db.Integer, db.ForeignKey('courier.courier_id'), nullable=True)
-    assign_time = db.Column(db.Datetime, nullable=True)
-    complete_time = db.Column(db.Datetime, nullable=True)
+    assign_time = db.Column(db.DateTime, nullable=True)
+    complete_time = db.Column(db.DateTime, nullable=True)
 
     def __repr__(self):
         order = dict()
@@ -52,36 +52,9 @@ class Order(db.Model):
         return str(order)
 
 
-db.create_all()
-
-##### SCHEMES #####
+# db.create_all()
 
 
-class CouriersSchema(ma.Schema):
-    class Meta:
-        # fields = {'courier_id', 'courier_type', 'regions', 'working_hours'}
-        fields = {'courier_id'}
-
-
-# надо сделать как-то более оптимально - вариацию полей для каждого задания
-class CourierSchema(ma.Schema):
-    class Meta:
-        fields = {'courier_id', 'courier_type', 'regions', 'working_hours'}
-        # fields = {'courier_id'}
-
-
-class OrderSchema(ma.Schema):
-    class Meta:
-        # fields = {'order_id', 'weight', 'region', 'delivery_hours'}
-        fields = {'order_id'}
-
-
-courier_schema = CourierSchema(strict=True)
-couriers_schema = CouriersSchema(many=True, sctrict=True)
-
-
-order_schema = OrderSchema(strict=True)
-orders_schema = OrderSchema(many=True, strict=True)
 
 
 
