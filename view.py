@@ -6,6 +6,7 @@ from datetime import datetime
 from flask import Response
 import json
 
+
 def transform_into_dict(ids):
     list_of_dicts_with_id = []
     for i in ids:
@@ -38,10 +39,14 @@ def has_overlap(c, o):
 
 @app.route('/couriers', methods=['POST'])
 def add_couriers():
-    data = request.json['data']
+    try:
+        data = request.json['data']
     # если вход неправильно формата
-    if not data:
-        return "HTTP 400 Bad Request\n", 400
+    except:
+        response = app.response_class(response="HTTP 400 Bad Request\n" + "Please check the input data format",
+                                      status=400,
+                                      )
+        return response
     new_couriers_id = []
     data = validate_courier(data)
     for courier in data[0]:

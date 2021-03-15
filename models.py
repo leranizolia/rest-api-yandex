@@ -52,7 +52,7 @@ class Order(db.Model):
         return str(order)
 
 
-# db.create_all()
+db.create_all()
 
 
 

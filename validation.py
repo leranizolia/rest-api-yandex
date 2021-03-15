@@ -13,32 +13,32 @@ def validate_courier(data):
     wrong_couriers = []
     wrong_couriers_ind = []
     for ind, courier in enumerate(data):
-        if courier.get('courier_id', 'missed id') == 'missed id' or courier['courier_id'] == str(' ') \
-                or courier['courier_id'] <= 0\
-                or not isinstance(courier['courier_id'], int):
+        if courier.get('courier_id', 'missed id') == 'missed id' or not isinstance(courier['courier_id'], int) \
+                or courier['courier_id'] <= 0:
             wrong_couriers_ind.append(ind)
             validated = False
         if courier.get('courier_type', 'missed type') == 'missed type' or courier['courier_type'] not in ['foot', 'bike', 'car']:
-            wrong_couriers_ind.append(ind)
             validated = False
             # если курьер не относится к категории, у которой проблема с id
             if ind not in wrong_couriers_ind:
                 wrong_couriers.append(courier['courier_id'])
-        if courier.get('regions', 'missed regions') == 'missed regions' or not all(a > 0 for a in courier['regions']) \
-                or not all(isinstance(a, int) for a in courier['regions']) or courier['regions'] == []:
+            wrong_couriers_ind.append(ind)
+        if courier.get('regions', 'missed regions') == 'missed regions' or not isinstance(courier['regions'], list) \
+                or not all(isinstance(a, int) for a in courier['regions']) \
+                or not all(a > 0 for a in courier['regions']):
             wrong_couriers_ind.append(ind)
             validated = False
             # если курьер не относится к категории, у которой проблема с id
-            if courier.get('courier_id', 'missed id') != 'missed id' and courier['courier_id'] != str(' ')\
-                    or courier['courier_id'] <= 0 or type(courier['courier_id']) != 'int':
+            if not (courier.get('courier_id', 'missed id') == 'missed id' or not isinstance(courier['courier_id'], int) \
+                    or courier['courier_id'] <= 0):
                 wrong_couriers.append(courier['courier_id'])
         if courier.get('working_hours', 'missed working hours') == 'missed working hours'\
                 or not all(re.match(pattern, a) is not None for a in courier['working_hours']) or courier['working_hours']==[]:
             wrong_couriers_ind.append(ind)
             validated = False
             # если курьер не относится к категории, у которой проблема с id
-            if courier.get('courier_id', 'missed id') != 'missed id' and courier['courier_id'] != str(' ')\
-                    or courier['courier_id'] <= 0 or type(courier['courier_id']) != 'int':
+            if not (courier.get('courier_id', 'missed id') == 'missed id' or not isinstance(courier['courier_id'], int) \
+                    or courier['courier_id'] <= 0):
                 wrong_couriers.append(courier['courier_id'])
 
     wrong_couriers_ind = list(set(wrong_couriers_ind))
@@ -56,8 +56,8 @@ def validate_order(data):
     wrong_orders = []
     wrong_orders_ind = []
     for ind, order in enumerate(data):
-        if order.get('order_id', 'missed id') == 'missed id' or order['order_id'] == str(' ') or order['order_id'] <= 0\
-                or type(order['order_id']) != 'int':
+        if order.get('order_id', 'missed id') == 'missed id' or type(order['order_id']) != 'int' \
+                or order['order_id'] <= 0:
             wrong_orders_ind.append(ind)
             validated = False
         if order.get('weight', 'missed weight') == 'missed weight' or not (0.01 <= order['weight'] <= 50):
