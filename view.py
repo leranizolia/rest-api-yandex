@@ -47,6 +47,12 @@ def add_couriers():
                                       status=400,
                                       )
         return response
+    if len(data) == 0:
+        response = app.response_class(response="HTTP 400 Bad Request\n" + "Please check the input data format",
+                                      status=400,
+                                      )
+        return response
+
     new_couriers_id = []
     data = validate_courier(data)
     for courier in data[0]:
@@ -85,7 +91,6 @@ pattern = r"^([01]\d|2[0-3])\:([0-5]\d)-([01]\d|2[0-3])\:([0-5]\d)$"
 @app.route('/couriers/<courier_id>', methods=['PUT'])
 def update_courier(courier_id):
     courier = Courier.query.get(courier_id)
-    # надо ли это тоже делать?
     if not courier:
         return "HTTP 400 Bad Request\n",  400
     if request.json['courier_type']:
