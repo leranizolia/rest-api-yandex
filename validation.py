@@ -13,7 +13,6 @@ def validate_courier(data):
     wrong_couriers = []
     wrong_couriers_ind = []
     for ind, courier in enumerate(data):
-        #print(courier)
         if courier.get('courier_id', 'missed id') == 'missed id' or courier['courier_id'] == str(' ') \
                 or courier['courier_id'] <= 0\
                 or not isinstance(courier['courier_id'], int):
@@ -26,7 +25,7 @@ def validate_courier(data):
             if ind not in wrong_couriers_ind:
                 wrong_couriers.append(courier['courier_id'])
         if courier.get('regions', 'missed regions') == 'missed regions' or not all(a > 0 for a in courier['regions']) \
-                or not all(isinstance(a, int) for a in courier['regions']):
+                or not all(isinstance(a, int) for a in courier['regions']) or courier['regions'] == []:
             wrong_couriers_ind.append(ind)
             validated = False
             # если курьер не относится к категории, у которой проблема с id
@@ -44,13 +43,10 @@ def validate_courier(data):
 
     wrong_couriers_ind = list(set(wrong_couriers_ind))
     wrong_couriers = list(set(wrong_couriers))
-    #print(wrong_couriers_ind)
 
     if validated:
-        #print(courier)
         return data, data
     else:
-        #print(data)
         return [courier for courier in data if courier not in [data[x] for x in wrong_couriers_ind]], validated,\
                transform_into_dict(wrong_couriers)
 

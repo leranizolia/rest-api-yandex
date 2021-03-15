@@ -58,12 +58,18 @@ def add_couriers():
     db.session.commit()
 
     if data[1]:
-        return "HTTP 201 Created\n", jsonify({"couriers": transform_into_dict(new_couriers_id)}), 201
+        data = {"couriers": transform_into_dict(new_couriers_id)}
+        response = app.response_class(response="HTTP 201 Created\n" + json.dumps(data),
+                                      status=201,
+                                      mimetype="application/json"
+                                      )
     else:
-        response = Response(response=jsonify({"validation_error": data[2]}),
-                           status=400,
-                           headers="HTTP 400 Bad Request\n")
-        return response
+        data = {"validation_error": {"couriers": data[2]}}
+        response = app.response_class(response="HTTP 400 Bad Request\n" + json.dumps(data),
+                                      status=400,
+                                      mimetype="application/json"
+                                      )
+    return response
 
 # Update info about courier
 
