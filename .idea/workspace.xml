@@ -39,7 +39,7 @@
         <counts>
           <entry key="Python Console" value="173" />
           <entry key="json" value="10" />
-          <entry key="py" value="11958" />
+          <entry key="py" value="13447" />
           <entry key="sh" value="1" />
         </counts>
       </usages-collector>
@@ -47,7 +47,7 @@
         <counts>
           <entry key="JSON" value="10" />
           <entry key="PLAIN_TEXT" value="1" />
-          <entry key="Python" value="12131" />
+          <entry key="Python" value="13620" />
         </counts>
       </usages-collector>
     </session>
@@ -88,8 +88,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/validation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="799">
-              <caret line="59" column="25" lean-forward="true" selection-start-line="59" selection-start-column="25" selection-end-line="59" selection-end-column="25" />
+            <state relative-caret-position="125">
+              <caret line="72" column="43" lean-forward="true" selection-start-line="72" selection-start-column="43" selection-end-line="72" selection-end-column="43" />
               <folding>
                 <element signature="e#162#171#0" expanded="true" />
               </folding>
@@ -121,13 +121,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="52" column="39" lean-forward="true" selection-start-line="52" selection-start-column="39" selection-end-line="52" selection-end-column="39" />
+            <state relative-caret-position="428">
+              <caret line="190" column="44" selection-start-line="190" selection-start-column="44" selection-end-line="190" selection-end-column="44" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
-                <marker date="1615837616453" expanded="true" signature="891:892" ph="..." />
-                <marker date="1615837616453" expanded="true" signature="2915:6153" ph="..." />
-                <marker date="1615837616453" expanded="true" signature="6473:6474" ph="..." />
+                <marker date="1615880518265" expanded="true" signature="891:892" ph="..." />
+                <marker date="1615880518265" expanded="true" signature="2915:7130" ph="..." />
+                <marker date="1615880518265" expanded="true" signature="7450:7451" ph="..." />
               </folding>
             </state>
           </provider>
@@ -141,11 +141,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="370" lean-forward="true" selection-start-line="370" selection-end-line="370" />
+            <state relative-caret-position="88">
+              <caret line="1272" column="38" lean-forward="true" selection-start-line="1272" selection-start-column="38" selection-end-line="1272" selection-end-column="38" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <marker date="1615837431199" expanded="true" signature="9038:9039" ph="..." />
+                <marker date="1615889759649" expanded="true" signature="10216:10217" ph="..." />
               </folding>
             </state>
           </provider>
@@ -174,9 +174,9 @@
         <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/models.py" />
         <option value="$PROJECT_DIR$/curl_tests/post_working_hours_valid.sh" />
+        <option value="$PROJECT_DIR$/view.py" />
         <option value="$PROJECT_DIR$/validation.py" />
         <option value="$PROJECT_DIR$/tests.py" />
-        <option value="$PROJECT_DIR$/view.py" />
       </list>
     </option>
   </component>
@@ -238,29 +238,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for tests.test_upload_couriers_invalid_data_02">
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="rest_api_yandex" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="pytest for tests.test_upload_couriers_invalid_data_02" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.pytest for tests.test_upload_orders_invalid_delivery_hours_08">
+    <configuration name="pytest for tests.test_upload_orders_invalid_delivery_hours_03" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="rest_api_yandex" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -271,11 +250,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;tests.test_upload_couriers_invalid_data_02&quot;" />
+      <option name="_new_target" value="&quot;tests.test_upload_orders_invalid_delivery_hours_03&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for tests.test_upload_couriers_invalid_regions_02" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for tests.test_upload_orders_invalid_delivery_hours_04" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="rest_api_yandex" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -286,11 +265,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;tests.test_upload_couriers_invalid_regions_02&quot;" />
+      <option name="_new_target" value="&quot;tests.test_upload_orders_invalid_delivery_hours_04&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for tests.test_upload_couriers_invalid_regions_03" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for tests.test_upload_orders_invalid_delivery_hours_06" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="rest_api_yandex" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -301,11 +280,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;tests.test_upload_couriers_invalid_regions_03&quot;" />
+      <option name="_new_target" value="&quot;tests.test_upload_orders_invalid_delivery_hours_06&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for tests.test_upload_couriers_invalid_working_hours_01" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for tests.test_upload_orders_invalid_delivery_hours_07" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="rest_api_yandex" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -316,24 +295,39 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;tests.test_upload_couriers_invalid_working_hours_01&quot;" />
+      <option name="_new_target" value="&quot;tests.test_upload_orders_invalid_delivery_hours_07&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for tests.test_upload_orders_invalid_delivery_hours_08" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="rest_api_yandex" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;tests.test_upload_orders_invalid_delivery_hours_08&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python tests.pytest for tests.test_upload_couriers_invalid_regions_02" />
-      <item itemvalue="Python tests.pytest for tests.test_upload_couriers_invalid_regions_03" />
-      <item itemvalue="Python tests.pytest for tests.test_upload_couriers_invalid_working_hours_01" />
-      <item itemvalue="Python.main" />
-      <item itemvalue="Python tests.pytest for tests.test_upload_couriers_invalid_data_02" />
+      <item itemvalue="Python tests.pytest for tests.test_upload_orders_invalid_delivery_hours_03" />
+      <item itemvalue="Python tests.pytest for tests.test_upload_orders_invalid_delivery_hours_04" />
+      <item itemvalue="Python tests.pytest for tests.test_upload_orders_invalid_delivery_hours_06" />
+      <item itemvalue="Python tests.pytest for tests.test_upload_orders_invalid_delivery_hours_07" />
+      <item itemvalue="Python tests.pytest for tests.test_upload_orders_invalid_delivery_hours_08" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.pytest for tests.test_upload_couriers_invalid_data_02" />
-        <item itemvalue="Python tests.pytest for tests.test_upload_couriers_invalid_working_hours_01" />
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python tests.pytest for tests.test_upload_couriers_invalid_regions_03" />
-        <item itemvalue="Python tests.pytest for tests.test_upload_couriers_invalid_regions_02" />
+        <item itemvalue="Python tests.pytest for tests.test_upload_orders_invalid_delivery_hours_08" />
+        <item itemvalue="Python tests.pytest for tests.test_upload_orders_invalid_delivery_hours_07" />
+        <item itemvalue="Python tests.pytest for tests.test_upload_orders_invalid_delivery_hours_06" />
+        <item itemvalue="Python tests.pytest for tests.test_upload_orders_invalid_delivery_hours_04" />
+        <item itemvalue="Python tests.pytest for tests.test_upload_orders_invalid_delivery_hours_03" />
       </list>
     </recent_temporary>
   </component>
@@ -351,35 +345,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_tests_test_upload_couriers_invalid_working_hours_01 - 2021.03.15 at 22h 25m 49s.xml">
-      <configuration name="pytest for tests.test_upload_couriers_invalid_working_hours_01" configurationId="tests" />
+    <history-entry file="pytest_for_tests_test_upload_orders_invalid_region_03 - 2021.03.16 at 12h 59m 34s.xml">
+      <configuration name="pytest for tests.test_upload_orders_invalid_region_03" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_tests_test_upload_couriers_invalid_working_hours_01 - 2021.03.15 at 22h 26m 54s.xml">
-      <configuration name="pytest for tests.test_upload_couriers_invalid_working_hours_01" configurationId="tests" />
+    <history-entry file="pytest_for_tests_test_upload_orders_invalid_region_04 - 2021.03.16 at 13h 01m 43s.xml">
+      <configuration name="pytest for tests.test_upload_orders_invalid_region_04" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_tests_test_upload_couriers_invalid_working_hours_01 - 2021.03.15 at 22h 28m 19s.xml">
-      <configuration name="pytest for tests.test_upload_couriers_invalid_working_hours_01" configurationId="tests" />
+    <history-entry file="pytest_for_tests_test_upload_orders_invalid_delivery_hours - 2021.03.16 at 13h 05m 23s.xml">
+      <configuration name="pytest for tests.test_upload_orders_invalid_delivery_hours" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_tests_test_upload_couriers_invalid_working_hours_01 - 2021.03.15 at 22h 29m 35s.xml">
-      <configuration name="pytest for tests.test_upload_couriers_invalid_working_hours_01" configurationId="tests" />
+    <history-entry file="pytest_for_tests_test_upload_orders_invalid_delivery_hours - 2021.03.16 at 13h 05m 36s.xml">
+      <configuration name="pytest for tests.test_upload_orders_invalid_delivery_hours" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_tests_test_upload_couriers_invalid_working_hours_01 - 2021.03.15 at 22h 31m 34s.xml">
-      <configuration name="pytest for tests.test_upload_couriers_invalid_working_hours_01" configurationId="tests" />
+    <history-entry file="pytest_for_tests_test_upload_orders_invalid_delivery_hours_02 - 2021.03.16 at 13h 08m 20s.xml">
+      <configuration name="pytest for tests.test_upload_orders_invalid_delivery_hours_02" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_tests_test_upload_couriers_invalid_working_hours_01 - 2021.03.15 at 22h 34m 07s.xml">
-      <configuration name="pytest for tests.test_upload_couriers_invalid_working_hours_01" configurationId="tests" />
+    <history-entry file="pytest_for_tests_test_upload_orders_invalid_delivery_hours_03 - 2021.03.16 at 13h 10m 28s.xml">
+      <configuration name="pytest for tests.test_upload_orders_invalid_delivery_hours_03" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_tests_test_upload_couriers_invalid_working_hours_01 - 2021.03.15 at 22h 35m 15s.xml">
-      <configuration name="pytest for tests.test_upload_couriers_invalid_working_hours_01" configurationId="tests" />
+    <history-entry file="pytest_for_tests_test_upload_orders_invalid_delivery_hours_04 - 2021.03.16 at 13h 11m 54s.xml">
+      <configuration name="pytest for tests.test_upload_orders_invalid_delivery_hours_04" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_tests_test_upload_couriers_invalid_working_hours_01 - 2021.03.15 at 22h 38m 56s.xml">
-      <configuration name="pytest for tests.test_upload_couriers_invalid_working_hours_01" configurationId="tests" />
+    <history-entry file="pytest_for_tests_test_upload_orders_invalid_delivery_hours_06 - 2021.03.16 at 13h 14m 07s.xml">
+      <configuration name="pytest for tests.test_upload_orders_invalid_delivery_hours_06" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_tests_test_upload_couriers_invalid_data_02 - 2021.03.15 at 22h 43m 54s.xml">
-      <configuration name="pytest for tests.test_upload_couriers_invalid_data_02" configurationId="tests" />
+    <history-entry file="pytest_for_tests_test_upload_orders_invalid_delivery_hours_07 - 2021.03.16 at 13h 15m 16s.xml">
+      <configuration name="pytest for tests.test_upload_orders_invalid_delivery_hours_07" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_tests_test_upload_couriers_invalid_data_02 - 2021.03.15 at 22h 47m 00s.xml">
-      <configuration name="pytest for tests.test_upload_couriers_invalid_data_02" configurationId="tests" />
+    <history-entry file="pytest_for_tests_test_upload_orders_invalid_delivery_hours_08 - 2021.03.16 at 13h 16m 03s.xml">
+      <configuration name="pytest for tests.test_upload_orders_invalid_delivery_hours_08" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -487,13 +481,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/http/server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="425" selection-start-line="425" selection-end-line="425" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/werkzeug/debug/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="104">
@@ -536,9 +523,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/openapi.yaml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -571,6 +555,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/openapi.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/http/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="425" selection-start-line="425" selection-end-line="425" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="190" column="44" selection-start-line="190" selection-start-column="44" selection-end-line="190" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+            <marker date="1615880518265" expanded="true" signature="891:892" ph="..." />
+            <marker date="1615880518265" expanded="true" signature="2915:7130" ph="..." />
+            <marker date="1615880518265" expanded="true" signature="7450:7451" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -581,23 +588,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="52" column="39" lean-forward="true" selection-start-line="52" selection-start-column="39" selection-end-line="52" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-            <marker date="1615837616453" expanded="true" signature="891:892" ph="..." />
-            <marker date="1615837616453" expanded="true" signature="2915:6153" ph="..." />
-            <marker date="1615837616453" expanded="true" signature="6473:6474" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/validation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="59" column="25" lean-forward="true" selection-start-line="59" selection-start-column="25" selection-end-line="59" selection-end-column="25" />
+        <state relative-caret-position="125">
+          <caret line="72" column="43" lean-forward="true" selection-start-line="72" selection-start-column="43" selection-end-line="72" selection-end-column="43" />
           <folding>
             <element signature="e#162#171#0" expanded="true" />
           </folding>
@@ -606,11 +600,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="370" lean-forward="true" selection-start-line="370" selection-end-line="370" />
+        <state relative-caret-position="88">
+          <caret line="1272" column="38" lean-forward="true" selection-start-line="1272" selection-start-column="38" selection-end-line="1272" selection-end-column="38" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
-            <marker date="1615837431199" expanded="true" signature="9038:9039" ph="..." />
+            <marker date="1615889759649" expanded="true" signature="10216:10217" ph="..." />
           </folding>
         </state>
       </provider>

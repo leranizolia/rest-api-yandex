@@ -149,29 +149,51 @@ def update_courier(courier_id):
                                      "regions": courier.regions, "working_hours": courier.working_hours}), 200
 
 
+# Upload orders into the system
+
 @app.route('/orders', methods=['POST'])
 def add_orders():
-    data = request.json['data']
-    if not data:
-        return "HTTP 400 Bad Request\n", 400
+    try:
+        data = request.json['data']
+    # если вход неправильно формата
+    except:
+        response = app.response_class(response="HTTP 400 Bad Request\n" + "Please check the input data format",
+                                      status=400,
+                                      )
+        return response
+    if len(data) == 0:
+        response = app.response_class(response="HTTP 400 Bad Request\n" + "Please check the input data format",
+                                      status=400,
+                                      )
+        return response
     new_orders_id = []
-    for order in validate_order(data)[0]:
+    data = validate_order(data)
+    for order in data[0]:
         order_id = order['order_id']
         weight = order['weight']
         region = order['region']
         delivery_hours = order['delivery_hours']
 
-        new_order = Order(order_id, weight, region, delivery_hours)
+        new_order = Order(order_id=order_id, weight=weight, region=region, delivery_hours=delivery_hours)
         db.session.add(new_order)
 
         new_orders_id.append(new_order.order_id)
 
     db.session.commit()
 
-    if validate_order(data)[1]:
-        return "HTTP 201 Created\n", jsonify({"orders": transform_into_dict(new_orders_id)}), 201
+    if data[1]:
+        data = {"orders": transform_into_dict(new_orders_id)}
+        response = app.response_class(response="HTTP 201 Created\n" + json.dumps(data),
+                                      status=201,
+                                      mimetype="application/json"
+                                      )
     else:
-        return "HTTP 400 Bad Request\n", jsonify({"validation_error": validate_order(data)[2]}), 400
+        data = {"validation_error": {"orders": data[2]}}
+        response = app.response_class(response="HTTP 400 Bad Request\n" + json.dumps(data),
+                                      status=400,
+                                      mimetype="application/json"
+                                      )
+    return response
 
 
 # функция для получения всех заказов из системы

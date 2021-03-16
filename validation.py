@@ -62,39 +62,45 @@ def validate_order(data):
     wrong_orders = []
     wrong_orders_ind = []
     for ind, order in enumerate(data):
-        if order.get('order_id', 'missed id') == 'missed id' or type(order['order_id']) != 'int' \
+        if order.get('order_id', 'missed id') == 'missed id' or not isinstance(order['order_id'], int) \
                 or order['order_id'] <= 0:
             wrong_orders_ind.append(ind)
             validated = False
-        if order.get('weight', 'missed weight') == 'missed weight' or not (0.01 <= order['weight'] <= 50):
-            wrong_orders_ind.append(ind)
+        if order.get('weight', 'missed weight') == 'missed weight' or not (isinstance(order['weight'], float) or isinstance(order['weight'], int))\
+                or not (0.01 <= order['weight'] <= 50):
             validated = False
             # если заказ не относится к категории, у которой проблема с id
             if ind not in wrong_orders_ind:
                 wrong_orders.append(order['order_id'])
-        if order.get('region', 'missed region') == 'missed region' or not all(a > 0 for a in order['region']) \
-                or not all(type(a) == 'int' for a in order['region']):
+            wrong_orders_ind.append(ind)
+        if order.get('region', 'missed region') == 'missed region' or not isinstance(order['region'], int) \
+                or order['region'] <= 0:
             wrong_orders_ind.append(ind)
             validated = False
-            # если курьер не относится к категории, у которой проблема с id
-            if order.get('order_id', 'missed id') != 'missed id' and order['order_id'] != str(' ')\
-                    or order['order_id'] <= 0 or type(order['order_id']) != 'int':
-                wrong_orders.append(order['courier_id'])
-        if order.get('delivery_hours', 'missed delivery hours') == 'missed delivery hours' \
-                or re.match(pattern, order['delivery_hours']) is None:
+            # если заказ не относится к категории, у которой проблема с id
+            if not (order.get('order_id', 'missed id') == 'missed id' or not isinstance(order['order_id'], int)
+                    or order['order_id'] <= 0):
+                wrong_orders.append(order['order_id'])
+        if order.get('delivery_hours', 'missed delivery hours') == 'missed delivery hours'\
+                or not isinstance(order['delivery_hours'], list)\
+                or len(order['delivery_hours']) == 0\
+                or not all(re.match(pattern, a) is not None for a in order['delivery_hours'])\
+                or not all(datetime.strptime(a.split('-')[0], format) < datetime.strptime(a.split('-')[1], format) for a in order['delivery_hours']):
             wrong_orders_ind.append(ind)
             validated = False
-            # если курьер не относится к категории, у которой проблема с id
-            if order.get('order_id', 'missed id') != 'missed id' and order['courier_id'] != str(' ')\
-                    or order['order_id'] <= 0 or type(order['order_id']) != 'int':
-                wrong_orders.append(order['courier_id'])
+            # если заказ не относится к категории, у которой проблема с id
+            if not (order.get('order_id', 'missed id') == 'missed id' or not isinstance(order['order_id'], int)
+                    or order['order_id'] <= 0):
+                wrong_orders.append(order['order_id'])
 
-    wrong_orders_ind = set(wrong_orders_ind)
-    wrong_orders = set(wrong_orders)
+    wrong_orders_ind = list(set(wrong_orders_ind))
+    wrong_orders = list(set(wrong_orders))
 
     if validated:
         return data, validated
     else:
-        return [order for order in data if order not in data[wrong_orders_ind]], validated,\
+        return [order for order in data if order not in [data[x] for x in wrong_orders_ind]], validated,\
                transform_into_dict(wrong_orders)
+
+
 
