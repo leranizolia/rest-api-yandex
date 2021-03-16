@@ -711,7 +711,7 @@ def test_upload_orders_valid():
     print(result.text)
     assert 201 == result.status_code
 
-# тест на невалидные формат входных данных
+# тест на невалидный формат входных данных
 
 
 def test_upload_orders_invalid_data_01():
@@ -1273,5 +1273,358 @@ def test_upload_orders_invalid_delivery_hours_08():
     result = requests.post('http://127.0.0.1:5000/orders', json=data, headers={'Content-Type': 'application/json'})
     print(result.text)
     assert 400 == result.status_code
+
+
+
+
+### ТЕСТЫ ДЛЯ UPDATE COURIER ###
+
+# Тест из файла с заданием
+
+
+def test_update_courier_valid():
+
+    data = {
+                "regions": [11, 33, 2, 10]
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/2', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+# Тест с апдейтами нескольких полей
+
+
+def test_update_courier_valid_2_fields():
+
+    data = {
+                "regions": [11, 33, 2],
+                "courier_type": "bike"
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/2', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_update_courier_valid_3_fields():
+
+    data = {
+                "regions": [11, 33, 2, 7],
+                "courier_type": "bike",
+                "working_hours": ["09:00-17:00"]
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/2', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+# Тест с попыткой изменить поле несуществующего курьера
+
+
+def test_update_courier_invalid_courier_id():
+
+    data = {
+                "regions": [11, 33, 2, 7],
+                "courier_type": "bike",
+                "working_hours": ["09:00-17:00"]
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/1000', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 404 == result.status_code
+
+# Тест с невалидным форматом входа
+
+
+def test_update_courier_invalid_input_format_01():
+
+    data = {
+                "courier_id": 100
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/1', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_update_courier_invalid_input_format_02():
+
+    data = {
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/1', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+# Тест с невалидным полем regions для изменения
+
+
+def test_update_courier_invalid_courier_regions_01():
+
+    data = {
+                "regions": [11, 33, 2, "Moscow"],
+                "courier_type": "bike",
+                "working_hours": ["09:00-17:00"]
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/1', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_update_courier_invalid_courier_regions_02():
+
+    data = {
+                "regions": "Moscow",
+                "courier_type": "bike",
+                "working_hours": ["09:00-17:00"]
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/1', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_update_courier_invalid_courier_regions_03():
+
+    data = {
+                "regions": [],
+                "courier_type": "bike",
+                "working_hours": ["09:00-17:00"]
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/1', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_update_courier_invalid_courier_regions_04():
+
+    data = {
+                "regions": [0, 1, 2, 3],
+                "courier_type": "bike",
+                "working_hours": ["09:00-17:00"]
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/1', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+# Тест с невалидным полем courier_type для изменения
+
+
+def test_update_courier_invalid_courier_type_01():
+
+    data = {
+                "regions": [11, 33, 2],
+                "courier_type": "bikes",
+                "working_hours": ["09:00-17:00"]
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/1', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_update_courier_invalid_courier_type_02():
+
+    data = {
+                "regions": [11, 33, 2],
+                "courier_type": " ",
+                "working_hours": ["09:00-17:00"]
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/1', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_update_courier_invalid_courier_type_03():
+
+    data = {
+                "regions": [11, 33, 2],
+                "courier_type": 100,
+                "working_hours": ["09:00-17:00"]
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/1', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+# Тест с невалидным полем courier_type для изменения
+
+
+def test_update_courier_invalid_working_hours_01():
+
+    data = {
+                "regions": [11, 33, 2],
+                "courier_type": "bike",
+                "working_hours": ["18:00-17:00"]
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/1', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_update_courier_invalid_working_hours_02():
+
+    data = {
+                "regions": [11, 33, 2],
+                "courier_type": "bike",
+                "working_hours": ["18:00-30:00"]
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/1', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_update_courier_invalid_working_hours_03():
+
+    data = {
+                "regions": [11, 33, 2],
+                "courier_type": "bike",
+                "working_hours": "10:00-18:00"
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/1', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_update_courier_invalid_working_hours_04():
+
+    data = {
+                "regions": [11, 33, 2],
+                "courier_type": "bike",
+                "working_hours": []
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/1', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+### ТЕСТЫ ДЛЯ ASSIGN COURIER ###
+
+def test_upload_orders_suitable_for_courier_2():
+
+    data = {
+        "data": [
+            {
+                "order_id": 10,
+                "weight": 10.55,
+                "region": 2,
+                "delivery_hours": ["11:35-14:05", "09:00-11:00"]
+            },
+            {
+                "order_id": 11,
+                "weight": 43,
+                "region": 10,
+                "delivery_hours": ["09:00-15:00"]
+            },
+            {
+                "order_id": 12,
+                "weight": 8.95,
+                "region": 13,
+                "delivery_hours": ["09:00-10:00"]
+            },
+            {
+                "order_id": 13,
+                "weight": 5,
+                "region": 10,
+                "delivery_hours": ["17:00-18:00"]
+            },
+            {
+                "order_id": 14,
+                "weight": 11,
+                "region": 10,
+                "delivery_hours": ["10:00-15:00"]
+            }
+
+        ]
+    }
+
+    result = requests.post('http://127.0.0.1:5000/orders', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 201 == result.status_code
+
+# Тест из файла с заданием
+
+#случай, когда есть заказы, которые соответствуют параметрам курьера
+
+
+def test_assign_order_valid_01():
+
+    data = {
+                "courier_id": 2
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+# случай, когда нет заказов, соответствующих параметрам курьера
+
+
+def test_assign_order_valid_02():
+
+    data = {
+                "courier_id": 4
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+
+# Тест на неправильный формат входных данных
+
+
+def test_assign_order_invalid_input_01():
+
+    data = {
+                "id": 2
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_assign_order_invalid_input_02():
+
+    data = {}
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+# Тест на несуществующего курьера или ошибку в написаний id
+
+
+def test_assign_order_invalid_id_01():
+
+    data = {
+                "courier_id": 1234567
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_assign_order_invalid_id_02():
+
+    data = {
+                "courier_id": 'second'
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
 
 

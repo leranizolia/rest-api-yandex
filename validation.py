@@ -19,7 +19,8 @@ def validate_courier(data):
                 or courier['courier_id'] <= 0:
             wrong_couriers_ind.append(ind)
             validated = False
-        if courier.get('courier_type', 'missed type') == 'missed type' or courier['courier_type'] not in ['foot', 'bike', 'car']:
+        if courier.get('courier_type', 'missed type') == 'missed type' or not isinstance(courier['courier_type'], str)\
+                or courier['courier_type'] not in ['foot', 'bike', 'car']:
             validated = False
             # если курьер не относится к категории, у которой проблема с id
             if ind not in wrong_couriers_ind:
