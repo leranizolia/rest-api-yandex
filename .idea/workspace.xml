@@ -39,7 +39,7 @@
         <counts>
           <entry key="Python Console" value="173" />
           <entry key="json" value="14" />
-          <entry key="py" value="16211" />
+          <entry key="py" value="16481" />
           <entry key="sh" value="1" />
         </counts>
       </usages-collector>
@@ -47,7 +47,7 @@
         <counts>
           <entry key="JSON" value="14" />
           <entry key="PLAIN_TEXT" value="1" />
-          <entry key="Python" value="16384" />
+          <entry key="Python" value="16654" />
         </counts>
       </usages-collector>
     </session>
@@ -100,7 +100,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
@@ -112,7 +112,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
+            <state relative-caret-position="-323">
               <caret line="292" column="33" lean-forward="true" selection-start-line="292" selection-start-column="33" selection-end-line="292" selection-end-column="33" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
@@ -135,27 +135,29 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/openapi.yaml">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-408" />
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="40" column="43" lean-forward="true" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
+            <state relative-caret-position="1649">
+              <caret line="1628" lean-forward="true" selection-start-line="1628" selection-end-line="1628" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <marker date="1615912621932" expanded="true" signature="10216:10217" ph="..." />
+                <marker date="1616148391065" expanded="true" signature="10216:10217" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="36" column="69" selection-start-line="36" selection-start-column="69" selection-end-line="36" selection-end-column="69" />
+            <state relative-caret-position="51">
+              <caret line="3" column="30" lean-forward="true" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -183,15 +185,15 @@
         <option value="$PROJECT_DIR$/curl_tests/post_working_hours_valid.sh" />
         <option value="$PROJECT_DIR$/validation.py" />
         <option value="$PROJECT_DIR$/debug.py" />
-        <option value="$PROJECT_DIR$/tests.py" />
         <option value="$PROJECT_DIR$/view.py" />
         <option value="$PROJECT_DIR$/models.py" />
         <option value="$PROJECT_DIR$/data.json" />
         <option value="$PROJECT_DIR$/data.py" />
+        <option value="$PROJECT_DIR$/tests.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="393" />
     <option name="width" value="945" />
     <option name="height" value="1032" />
@@ -244,7 +246,22 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for tests.test_assign_order_valid_01">
+  <component name="RunManager" selected="Python tests.pytest for tests.test_assign_order_invalid_id_01">
+    <configuration name="pytest for tests.test_assign_order_invalid_id_01" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="rest_api_yandex" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;tests.test_assign_order_invalid_id_01&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="pytest for tests.test_assign_order_valid_01" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="rest_api_yandex" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -257,21 +274,6 @@
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;tests.test_assign_order_valid_01&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="pytest for tests.test_update_courier_invalid_working_hours_02" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="rest_api_yandex" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;tests.test_update_courier_invalid_working_hours_02&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -321,19 +323,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python tests.pytest for tests.test_update_courier_invalid_working_hours_02" />
       <item itemvalue="Python tests.pytest for tests.test_update_courier_invalid_working_hours_03" />
       <item itemvalue="Python tests.pytest for tests.test_update_courier_invalid_working_hours_04" />
       <item itemvalue="Python tests.pytest for tests.test_upload_orders_suitable_for_courier_2" />
       <item itemvalue="Python tests.pytest for tests.test_assign_order_valid_01" />
+      <item itemvalue="Python tests.pytest for tests.test_assign_order_invalid_id_01" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.pytest for tests.test_assign_order_invalid_id_01" />
         <item itemvalue="Python tests.pytest for tests.test_assign_order_valid_01" />
         <item itemvalue="Python tests.pytest for tests.test_upload_orders_suitable_for_courier_2" />
         <item itemvalue="Python tests.pytest for tests.test_update_courier_invalid_working_hours_04" />
         <item itemvalue="Python tests.pytest for tests.test_update_courier_invalid_working_hours_03" />
-        <item itemvalue="Python tests.pytest for tests.test_update_courier_invalid_working_hours_02" />
       </list>
     </recent_temporary>
   </component>
@@ -351,9 +353,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_tests_test_update_courier_invalid_courier_regions_04 - 2021.03.16 at 19h 56m 21s.xml">
-      <configuration name="pytest for tests.test_update_courier_invalid_courier_regions_04" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_for_tests_test_update_courier_invalid_courier_type_01 - 2021.03.16 at 19h 56m 24s.xml">
       <configuration name="pytest for tests.test_update_courier_invalid_courier_type_01" configurationId="tests" />
     </history-entry>
@@ -381,17 +380,20 @@
     <history-entry file="pytest_for_tests_test_assign_order_valid_01 - 2021.03.16 at 19h 57m 22s.xml">
       <configuration name="pytest for tests.test_assign_order_valid_01" configurationId="tests" />
     </history-entry>
+    <history-entry file="pytest_for_tests_test_assign_order_invalid_id_01 - 2021.03.19 at 12h 57m 02s.xml">
+      <configuration name="pytest for tests.test_assign_order_invalid_id_01" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24960254" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24960254" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.5053381" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5053381" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39679715" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -536,9 +538,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/openapi.yaml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/http/server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="104">
@@ -563,26 +562,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/view.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="292" column="33" lean-forward="true" selection-start-line="292" selection-start-column="33" selection-end-line="292" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-            <marker date="1615912737453" expanded="true" signature="982:983" ph="..." />
-            <marker date="1615912737453" expanded="true" signature="3325:8470" ph="..." />
-            <marker date="1615912737453" expanded="true" signature="8668:8669" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -604,21 +583,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests.py">
+    <entry file="file://$PROJECT_DIR$/openapi.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="40" column="43" lean-forward="true" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
+        <state relative-caret-position="-408" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-323">
+          <caret line="292" column="33" lean-forward="true" selection-start-line="292" selection-start-column="33" selection-end-line="292" selection-end-column="33" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1615912621932" expanded="true" signature="10216:10217" ph="..." />
+            <element signature="e#0#27#0" expanded="true" />
+            <marker date="1615912737453" expanded="true" signature="982:983" ph="..." />
+            <marker date="1615912737453" expanded="true" signature="3325:8470" ph="..." />
+            <marker date="1615912737453" expanded="true" signature="8668:8669" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="69" selection-start-line="36" selection-start-column="69" selection-end-line="36" selection-end-column="69" />
+        <state relative-caret-position="51">
+          <caret line="3" column="30" lean-forward="true" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1649">
+          <caret line="1628" lean-forward="true" selection-start-line="1628" selection-end-line="1628" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <marker date="1616148391065" expanded="true" signature="10216:10217" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>

@@ -1627,4 +1627,14 @@ def test_assign_order_invalid_id_02():
     assert 400 == result.status_code
 
 
+def test_upload_couriers_valid():
+
+    from data import data
+    data = data
+
+    result = requests.post('http://127.0.0.1:5000/couriers', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 201 == result.status_code
+
+
 
