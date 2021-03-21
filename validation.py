@@ -1,10 +1,8 @@
-### в предположении, что отсутвие ключа или несоответствие его значения требованиям приводят к одной ошибке
-### что значит неописанные поля - пробел или пропуск?
 import re
 from view import transform_into_dict
 from datetime import datetime
 
-pattern = r"^([01]\d|2[0-3])\:([0-5]\d)-([01]\d|2[0-3])\:([0-5]\d)$"
+pattern_assign = r"^([01]\d|2[0-3])\:([0-5]\d)-([01]\d|2[0-3])\:([0-5]\d)$"
 format = '%H:%M'
 
 # проверка полей курьера на соответствие требованиям
@@ -39,7 +37,7 @@ def validate_courier(data):
         if courier.get('working_hours', 'missed working hours') == 'missed working hours'\
                 or not isinstance(courier['working_hours'], list)\
                 or len(courier['working_hours']) == 0\
-                or not all(re.match(pattern, a) is not None for a in courier['working_hours'])\
+                or not all(re.match(pattern_assign, a) is not None for a in courier['working_hours'])\
                 or not all(datetime.strptime(a.split('-')[0], format) < datetime.strptime(a.split('-')[1], format) for a in courier['working_hours']):
             wrong_couriers_ind.append(ind)
             validated = False
@@ -85,7 +83,7 @@ def validate_order(data):
         if order.get('delivery_hours', 'missed delivery hours') == 'missed delivery hours'\
                 or not isinstance(order['delivery_hours'], list)\
                 or len(order['delivery_hours']) == 0\
-                or not all(re.match(pattern, a) is not None for a in order['delivery_hours'])\
+                or not all(re.match(pattern_assign, a) is not None for a in order['delivery_hours'])\
                 or not all(datetime.strptime(a.split('-')[0], format) < datetime.strptime(a.split('-')[1], format) for a in order['delivery_hours']):
             wrong_orders_ind.append(ind)
             validated = False

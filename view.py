@@ -1,9 +1,8 @@
-from app import app, db, ma
+from app import app, db
 from models import Courier, Order
-from flask import request, jsonify
+from flask import request
 import re
-from datetime import datetime, timezone
-from flask import Response
+from datetime import datetime
 import json
 
 
@@ -84,7 +83,7 @@ def add_couriers():
 # Update info about courier
 
 
-pattern = r"^([01]\d|2[0-3])\:([0-5]\d)-([01]\d|2[0-3])\:([0-5]\d)$"
+pattern_assign = r"^([01]\d|2[0-3])\:([0-5]\d)-([01]\d|2[0-3])\:([0-5]\d)$"
 format = '%H:%M'
 
 
@@ -120,7 +119,7 @@ def update_courier(courier_id):
     try:
         result = request.json['working_hours']
         if not isinstance(result, list) or (len(result) == 0)\
-                or not all(re.match(pattern, a) is not None for a in result)\
+                or not all(re.match(pattern_assign, a) is not None for a in result)\
                 or not all(datetime.strptime(a.split('-')[0], format) < datetime.strptime(a.split('-')[1], format) for a in result):
             response = app.response_class(response="HTTP 400 Bad Request\n", status=400)
             return response
@@ -160,8 +159,9 @@ def update_courier(courier_id):
                 end_hours_o.append(period.split('-')[1])
                 order_hours.append((period.split('-')[0], period.split('-')[1]))
             # сбрасываем заказы, которые не соответствуют обновленным параметрам курьера
+            # (c учётом, что заказ не выполнен)
             if not ((float("{0:.2f}".format(order.weight)) <= weight_possible) and (order.region in courier.regions)
-                    and has_overlap(courier_hours, order_hours)):
+                    and has_overlap(courier_hours, order_hours)) and order.complete_time is None:
                 order.courier_id = None
                 order.assign_time = None
 
@@ -220,12 +220,6 @@ def add_orders():
                                       mimetype="application/json"
                                       )
     return response
-
-# для пересечения времени
-#def has_overlap(c_start, c_end, o_start, o_end):
-#    latest_start = max(c_start, o_start)
-#   earliest_end = min(c_end, o_end)
-#   return latest_start <= earliest_end
 
 
 @app.route('/orders/assign', methods=['POST'])
@@ -313,29 +307,58 @@ def assign():
         response = app.response_class(response=json.dumps(data), mimetype="application/json")
         return response
     else:
-        data = {"orders": transform_into_dict(orders_id_assign), "assign_time": str(assign_time_new.isoformat("T") + "Z")}
+        data = {"orders": transform_into_dict(orders_id_assign), "assign_time": str(assign_time_new.isoformat("T")[:-4] + "Z")}
         response = app.response_class(response="HTTP 200 OK\n" + json.dumps(data), status=200,
                                       mimetype="application/json")
         return response
 
 
+pattern_complete = r"^([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)" \
+          r"(\.[0-9]+)?(([Zz])|([\+|\-]([01][0-9]|2[0-3]):[0-5][0-9]))$"
+
+
 @app.route('/orders/complete', methods=['POST'])
-# делаю дефолт для complete_time, чтобы в assign не вылезла ошибка при вызове complete
 def complete():
-    courier_id = request.json['courier_id']
-    order_id = request.json['order_id']
+    response_400 = app.response_class(response="HTTP 400 Bad Request\n", status=400)
+    try:
+        courier_id = request.json['courier_id']
+    # если вход неправильно формата
+    except:
+        return response_400
+    courier = Courier.query.get(courier_id)
+    # если курьера нет в системе
+    if courier is None:
+        return response_400
+    try:
+        order_id = request.json['order_id']
+    # если вход неправильно формата
+    except:
+        return response_400
     order = Order.query.get(order_id)
-    order_id = order.order_id
-    assign_time = order.assign_time
-    complete_time = request.json['complete_time']
+    # если заказа нет в системе
+    if order is None:
+        return response_400
+    order_courier_id = order.courier_id
+    if (order_courier_id != courier_id) or (order_courier_id is None):
+        return response_400
+    try:
+        complete_time = request.json['complete_time']
+    except:
+        return response_400
+    if not (isinstance(complete_time, str)) or (re.match(pattern_complete, complete_time) is None)\
+            or (order.assign_time >= datetime.strptime(complete_time, "%Y-%m-%dT%H:%M:%S.%fZ")) \
+            or (order.complete_time is not None):
+        return response_400
+    else:
+        order.complete_time = datetime.strptime(complete_time, "%Y-%m-%dT%H:%M:%S.%fZ")
 
     db.session.commit()
 
-    if not order_id or courier_id != order.courier_id or not assign_time:
-        return "HTTP 400 Bad Request\n", 400
-    else:
-        order.complete_time = complete_time
-        return "HTTP 200 OK\n", jsonify({"id": order_id}), 200
+    data = {"order_id": order_id}
+    response = app.response_class(response="HTTP 200 OK\n" + json.dumps(data), status=200,
+                                  mimetype="application/json")
+    return response
+
 
 
 

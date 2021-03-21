@@ -1,12 +1,5 @@
 import requests
-from flask import request, jsonify
 
-
-#def test_login():
-#    result = requests.get('http://localhost:5000')
-#    assert 200 == result.status_code
-
-### TESTS FOR IMPORT COURIERS ###
 
 def test_upload_couriers_valid():
 
@@ -679,7 +672,7 @@ def test_upload_couriers_invalid_working_hours_07():
     assert 400 == result.status_code
 
 
-### TESTS FOR IMPORT ORDERS ###
+# TESTS FOR IMPORT ORDERS
 
 
 def test_upload_orders_valid():
@@ -1274,10 +1267,7 @@ def test_upload_orders_invalid_delivery_hours_08():
     print(result.text)
     assert 400 == result.status_code
 
-
-
-
-### ТЕСТЫ ДЛЯ UPDATE COURIER ###
+# ТЕСТЫ ДЛЯ UPDATE COURIER
 
 # Тест из файла с заданием
 
@@ -1509,7 +1499,7 @@ def test_update_courier_invalid_working_hours_04():
     assert 400 == result.status_code
 
 
-### ТЕСТЫ ДЛЯ ASSIGN COURIER ###
+# ТЕСТЫ ДЛЯ ASSIGN COURIER
 
 def test_upload_orders_suitable_for_courier_2():
 
@@ -1555,7 +1545,7 @@ def test_upload_orders_suitable_for_courier_2():
 
 # Тест из файла с заданием
 
-#случай, когда есть заказы, которые соответствуют параметрам курьера
+# случай, когда есть заказы, которые соответствуют параметрам курьера
 
 
 def test_assign_order_valid_01():
@@ -1627,14 +1617,431 @@ def test_assign_order_invalid_id_02():
     assert 400 == result.status_code
 
 
-def test_upload_couriers_valid():
+# Теперь добавим в базу побольше курьеров и заказов для тестов
 
-    from data import data
-    data = data
+
+def test_upload_couriers_valid_100():
+
+    from data_couriers import data
 
     result = requests.post('http://127.0.0.1:5000/couriers', json=data, headers={'Content-Type': 'application/json'})
     print(result.text)
     assert 201 == result.status_code
+
+
+def test_upload_orders_valid_100():
+
+    from data_orders import data
+
+    result = requests.post('http://127.0.0.1:5000/orders', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 201 == result.status_code
+
+# Теперь подберем заказы курьерам с помощью assign
+
+
+def test_assign_order_valid_101():
+
+    data = {
+                "courier_id": 101
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_102():
+
+    data = {
+                "courier_id": 102
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_103():
+
+    data = {
+                "courier_id": 103
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_104():
+
+    data = {
+                "courier_id": 104
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_105():
+
+    data = {
+                "courier_id": 105
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_106():
+
+    data = {
+                "courier_id": 106
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_107():
+
+    data = {
+                "courier_id": 107
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_108():
+
+    data = {
+                "courier_id": 108
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_109():
+
+    data = {
+                "courier_id": 109
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_110():
+
+    data = {
+                "courier_id": 110
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_111():
+
+    data = {
+                "courier_id": 111
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_112():
+
+    data = {
+                "courier_id": 112
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_113():
+
+    data = {
+                "courier_id": 113
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_114():
+
+    data = {
+                "courier_id": 114
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_115():
+
+    data = {
+                "courier_id": 115
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+# Тесты для complete
+
+# Тесты на невалидных курьеров
+
+
+def test_complete_order_invalid_courier_id_01():
+
+    data = {
+                "courier_id": 200,
+                "order_id": 101,
+                "complete_time": "2021-01-10T10:33:01.42Z"
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/complete', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_complete_order_invalid_courier_id_02():
+
+    data = {
+                "courier_id": 'second',
+                "order_id": 101,
+                "complete_time": "2021-01-10T10:33:01.42Z"
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/complete', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_complete_order_invalid_courier_id_03():
+
+    data = {
+                "order_id": 101,
+                "complete_time": "2021-01-10T10:33:01.42Z"
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/complete', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+# Тесты на невалидные заказы
+
+
+def test_complete_order_invalid_order_id_01():
+
+    data = {
+                "courier_id": 101,
+                "order_id": 200,
+                "complete_time": "2021-01-10T10:33:01.42Z"
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/complete', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_complete_order_invalid_order_id_02():
+
+    data = {
+                "courier_id": 101,
+                "order_id": 200,
+                "complete_time": "2021-01-10T10:33:01.42Z"
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/complete', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_complete_order_invalid_order_id_03():
+
+    data = {
+                "courier_id": 101,
+                "order_id": 'second',
+                "complete_time": "2021-01-10T10:33:01.42Z"
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/complete', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+def test_complete_order_invalid_order_id_04():
+
+    data = {
+                "courier_id": 101,
+                "complete_time": "2021-01-10T10:33:01.42Z"
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/complete', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+# Тест на случай когда у заказа другой курьер
+
+
+def test_complete_order_invalid_order_id_05():
+
+    data = {
+                "courier_id": 101,
+                "order_id": 103,
+                "complete_time": "2021-01-10T10:33:01.42Z"
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/complete', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+# Тест на случай когда у заказа нет курьера
+
+
+def test_complete_order_invalid_order_id_06():
+
+    data = {
+                "courier_id": 101,
+                "order_id": 104,
+                "complete_time": "2021-01-10T10:33:01.42Z"
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/complete', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 400 == result.status_code
+
+
+# Тест на валидный запрос complete
+
+def test_complete_order_valid():
+
+    data = {
+                "courier_id": 101,
+                "order_id": 102,
+                "complete_time": "2021-03-21T10:46:52.25Z"
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/complete', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+# Теперь проверим как работает assign с выполненными заказами
+
+# По правилам в списке заказов курьера 101 не должно быть 102 заказа, т к он его выполнил
+
+
+def test_assign_order_valid_101_new():
+
+    data = {
+                "courier_id": 101
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+# Теперь проверим апдейт для назначенных заказов
+
+# Сначала посмотрим какие заказы у курьера
+
+
+def test_assign_order_valid_108_again():
+
+    data = {
+                "courier_id": 108
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_update_courier_valid_for_108_update_type():
+
+    data = {
+                "courier_type": "foot"
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/108', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_108_new():
+
+    data = {
+                "courier_id": 108
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_update_courier_valid_for_108_update_regions():
+
+    data = {
+                "regions": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/108', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_108_new_new():
+
+    data = {
+                "courier_id": 108
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_update_courier_valid_for_108_update_working_hours():
+
+    data = {
+                "working_hours": ["07:00-21:00"]
+            }
+
+    result = requests.patch('http://127.0.0.1:5000/couriers/108', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
+
+def test_assign_order_valid_108_new_new_new():
+
+    data = {
+                "courier_id": 108
+            }
+
+    result = requests.post('http://127.0.0.1:5000/orders/assign', json=data, headers={'Content-Type': 'application/json'})
+    print(result.text)
+    assert 200 == result.status_code
+
 
 
 
