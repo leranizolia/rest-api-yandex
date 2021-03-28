@@ -1,3 +1,0 @@
-curl -d "{ "data": [ { "courier_id": 242, "courier_type": "foot", "regions": [1, 12, 22], "working_hours": ["11:35-14:05", "09
-:00-11:00"] }, { "courier_id": 243, "courier_type": "bike", "regions": [22], "working_hours": ["09:00-18:00"] }, { "courier_id": 242, "courier_type": "car", "regions": [12,
-22, 23, 33], "working_hours": [] } ] }" -H "Content-Type:applicatcion/json" -X POST "http://localhost:5000/couriers"
