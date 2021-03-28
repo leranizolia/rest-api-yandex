@@ -1,13 +1,8 @@
-from app import db, ma
-from datetime import datetime
-import re
-from flask import Flask, request
-from flask_restful import Api, Resource, reqparse, abort, fields, marshal_with
-from flask_sqlalchemy import SQLAlchemy
-from itertools import count
+from app import db
 
 
 ##### MODELS #####
+
 
 class Courier(db.Model):
     courier_id = db.Column(db.Integer, primary_key=True, nullable=False)
