@@ -1,58 +1,57 @@
 ## CANDY DELIVERY APP
 REST API for Yandex school
 
-В данном проекте представлена реализация Rest API сервиса, которой позволяет нанимать курьеров на работу, принимать заказы и оптимально распределять заказы между курьерами. Проект разработан в рамках Школы backend разработки Яндекса
+This project presents the implementation of the Rest API service, which allows you to hire couriers to work, take orders and optimally distribute orders between couriers. The project was developed as part of the Yandex Backend Development School
 
-## Для запуска проекта нужно выполнить следующие шаги:
+## To start the project, you need to follow these steps:
+1) Clone the project and go to the project folder (command 'git clone' with a link to the project)
 
-1) Склонировать проект и зайти в папку проекта (команда 'git clone' c ссылкой на проект)
+2) If the server is already running, then run the command - 'killall python' or 'sudo kill -9 "process PID"' (PID can be found with the command 'sudo netstat -ltup')
 
-2) Если сервер уже запущен то выполнить команду - 'killall python' или 'sudo kill -9 "process PID"' (PID можно найти командой 'sudo netstat -ltup')
+3) Run the command 'bash start_server.sh' or 'make all' (if you run from a third-party VM, you will need to rewrite the path in start_server.sh)
 
-3) Выполнить команду 'bash start_server.sh' или 'make all' (если запускать со сторонней ВМ, то нужно будет переписать путь в start_server.sh)
+4) Before using, you need to clear all the current tables that are in mysql in the candy_delivery_app database as follows:
 
-Перед использованием необходимо очистить все текущие таблицы, которые есть в mysql в базе данных candy_delivery_app следующим образом:
+5) Go to mysql (bash command - 'mysql')
 
-1) Зайти в mysql (команда в bash - 'mysql')
+6) Select database - 'use candy_delivery_app;'
 
-2) Выбрать базу данных - 'use candy_delivery_app;'
+7) Clear table - 'TRUNCATE TABLE order;' and 'TRUNCATE TABLE courier;'
 
-3) Очистить таблицу - 'TRUNCATE TABLE order;' и 'TRUNCATE TABLE courier;'
+8) Exit mysql ('exit')
 
-4) Выйти из mysql('exit')
+After the first run, it is advisable to "comment out" db.create_all () in models.py, which is used purely to create tables in the database from classes.
 
-После первого запуска желательно "закомментировать" db.create_all() в models.py, которая используется чисто для создания таблиц в базе данных из классов.
+The tests are in the tests.py file. They include both valid and invalid tests for all handlers, as well as tests that check the interaction of several handlers with each other (for example, canceling courier orders after updating its parameters, accounting for delivered orders when assigning new ones). Before each test, a comment is given containing brief information about the test (valid / invalid, what exactly is invalid, etc.), in addition, by the very name of the test-function, you can understand what the test is checking. The pytest library is designed in such a way that you can run the tests of interest separately, or you can run everything at once. Important: in order to check the interaction of handlers with each other, the database had to be filled with data (files: 'data_couriers.py', 'data_orders.py', import is implemented inside the file 'test.py' before 'complex' tests).
 
-Тесты находятся в файле tests.py. Они включают как валидные, так и невалидные тесты для всех обработчиков, а также тесты, которые проверяют взаимодействие нескольких обработчиков между собой (к примеру, снятие заказов курьера после апдейта его параметров, учёт доставленных заказов при назначении новых). Перед каждым тестом даётся комментарий, содержащий краткую информацию о тесте (valid/invalid, что именно невалидно и т. п.), кроме того, по самому названию теста-функции можно понять, что проверяет тест. Библиотека pytest устроена таким образом, что можно по отдельности запускать интересующие тесты, а можно разом запустить все. Важно: для того чтобы проверить работу взаимодействия обработчиков между собой, базу данных надо было заполнить данными (файлы: 'data_couriers.py', 'data_orders.py', импорт реализован внутри файла 'test.py' перед 'сложными' тестами).
+## The following libraries were used in the implementation:
 
-## При реализации были использованы библиотеки:
+Flask is a general structure,
 
-1) Flask - общее строение,
+flask_SQLAlchemy - for working with a database,
 
-2) flask_SQLAlchemy - для работы с базой данных,
+Datetime - for validating and saving dates,
 
-3) Datetime - для валидации и сохранения даты,
+requests - for working with HTTP requests;
 
-4) requests - для работы с  HTTP запросами;
+pytest - for testing REST API service
 
-5) pytest - для тестирования REST API сервиса
+To store the data, the Mysql database was used (When starting from a third-party computer, you need to create the 'candy_delivery_app' database, and rewrite the path to it in the config.py file)
 
-Для хранения данных была использована база данных Mysql (При запуске со стороннего компьютера необходимо создать базу данных 'candy_delivery_app', и переписать путь до нее в файле config.py)
+## Project files
 
-## Файлы проекта
+view.py - contains all necessary handlers (1: POST / couriers, 2: PATCH / couriers / $ courier_id, 3: POST / orders, 4: POST / orders / assign, 5: POST / orders / complete) and, accordingly, is responsible for all the commands of the Rest API service, in addition, in some handlers, input data validation is prescribed
 
-view.py - содержит все необходимые обработчики (1:POST/couriers, 2: PATCH/couriers/$courier_id, 3: POST/orders, 4: POST/orders/assign, 5: POST/orders/complete) и, соответственно, отвечает за все команды Rest API сервиса, кроме того, в некоторых обработчиках прописана валидация входных данных
+validation.py - functions for validation
 
-validation.py - функции для валидации
+models.py - stores the Courier and Order classes
 
-models.py - хранит классы курьера (Courier) и заказа (Order)
+config.py - project configuration
 
-config.py - конфигурация проекта
+app.py - primary declaration and database access
 
-app.py - первичное объявление и обращение к базе данных
+main.py - run the program
 
-main.py - запуск программы
+tests.py - contains tests with valid and invalid data / requests
 
-tests.py - содержит тесты с валидными и невалидными данными/запросами
-
-start_server.sh - скрипт запуска сервера через gunicorn, именно его запускает Виртуальная машина при перезагрузке
+start_server.sh - script for starting the server through gunicorn, it is it that starts the Virtual Machine on reboot
